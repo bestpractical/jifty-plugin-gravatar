@@ -30,9 +30,9 @@ template '/gravatar' => sub {
 
 template '/=/gravatar/image' => sub {
     my $config = Jifty->find_plugin('Jifty::Plugin::Gravatar');
-    Jifty->handler->apache->content_type("image/jpeg");
-    Jifty->handler->apache->header_out(
-        Expires => HTTP::Date::time2str( time() + ( $config->{CacheExpire} * 60 || 3 ))
+    Jifty->web->response->content_type("image/jpeg");
+    Jifty->web->response->header( Expires =>
+          HTTP::Date::time2str( time() + ( $config->{CacheExpire} * 60 || 3 ) )
     );
     my $id = get('id');
     my $gravatar_url = gravatar_url( id => $id );
